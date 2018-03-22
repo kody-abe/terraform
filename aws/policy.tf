@@ -98,6 +98,7 @@ data "aws_iam_policy_document" "geopoiesis" {
     // https://docs.aws.amazon.com/IAM/latest/UserGuide/list_ssm.html
     actions = [
       "ssm:DeleteParameter",
+      "ssm:GetParameter",
       "ssm:PutParameter",
     ]
 
