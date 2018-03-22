@@ -99,24 +99,13 @@ data "aws_iam_policy_document" "geopoiesis" {
     actions = [
       "ssm:DeleteParameter",
       "ssm:GetParameter",
+      "ssm:GetParametersByPath",
       "ssm:PutParameter",
     ]
 
     resources = [
       "arn:aws:ssm:${var.region}:${local.account_id}:parameter/${var.ssm_prefix}/*",
-    ]
-  }
-
-  statement {
-    effect = "Allow"
-
-    // https://docs.aws.amazon.com/IAM/latest/UserGuide/list_ssm.html
-    actions = [
-      "ssm:GetParametersByPath",
-    ]
-
-    resources = [
-      "*",
+      "arn:aws:ssm:${var.region}:${local.account_id}:parameter/${var.ssm_prefix}/*/*",
     ]
   }
 }
