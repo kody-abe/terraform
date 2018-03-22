@@ -41,14 +41,24 @@ output "access_key_id" {
   value = "${join("", aws_iam_access_key.geopoiesis.*.id)}"
 }
 
-// Static access key secret, generated when running Geopoiesis outside ECS.
-output "secret_access_key" {
-  value = "${join("", aws_iam_access_key.geopoiesis.*.secret)}"
+// KMS key ID for the backend to use.
+output "kms_key_id" {
+  value = "${aws_kms_key.geopoiesis.key_id}"
 }
 
 // Policy ARN, used to attach to an arbitrary role or user.
 output "policy_arn" {
   value = "${aws_iam_policy.geopoiesis.arn}"
+}
+
+// S3 bucket name for the backend to use.
+output "s3_bucket_name" {
+  value = "${aws_s3_bucket.geopoiesis.id}"
+}
+  
+// Static access key secret, generated when running Geopoiesis outside ECS.
+output "secret_access_key" {
+  value = "${join("", aws_iam_access_key.geopoiesis.*.secret)}"
 }
 
 // Role ARN, used to run Geopoiesis on ECS.
