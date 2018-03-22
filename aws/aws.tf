@@ -46,6 +46,11 @@ output "secret_access_key" {
   value = "${join("", aws_iam_access_key.geopoiesis.*.secret)}"
 }
 
+// Policy ARN, used to attach to an arbitrary role or user.
+output "policy_arn" {
+  value = "${join("", aws_iam_policy.geopoiesis.*.arn)}"
+}
+
 // Role ARN, used to run Geopoiesis on ECS.
 output "task_role_arn" {
   value = "${join("", aws_iam_role.geopoiesis.*.arn)}"
