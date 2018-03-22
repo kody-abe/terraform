@@ -55,7 +55,7 @@ output "policy_arn" {
 output "s3_bucket_name" {
   value = "${aws_s3_bucket.geopoiesis.id}"
 }
-  
+
 // Static access key secret, generated when running Geopoiesis outside ECS.
 output "secret_access_key" {
   value = "${join("", aws_iam_access_key.geopoiesis.*.secret)}"

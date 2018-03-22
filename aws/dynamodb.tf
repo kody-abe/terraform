@@ -66,13 +66,13 @@ resource "aws_dynamodb_table" "geopoiesis-runs" {
   }
 
   global_secondary_index {
-    hash_key            = "scope_with_blocking"
-    range_key           = "id"
-    name                = "byblocking"
-    projection_type     = "INCLUDE"
-    non_key_attributes  = ["state", "worker_id"]
-    read_capacity       = 3
-    write_capacity      = 3
+    hash_key           = "scope_with_blocking"
+    range_key          = "id"
+    name               = "byblocking"
+    projection_type    = "INCLUDE"
+    non_key_attributes = ["state", "worker_id"]
+    read_capacity      = 3
+    write_capacity     = 3
   }
 
   global_secondary_index {
