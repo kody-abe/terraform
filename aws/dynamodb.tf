@@ -55,12 +55,16 @@ resource "aws_dynamodb_table" "geopoiesis-runs" {
     type = "S"
   }
 
+  attribute {
+    name = "scope_with_visibility"
+    type = "S"
+  }
+
   global_secondary_index {
     hash_key           = "scope_with_state"
     range_key          = "id"
     name               = "bystate"
-    projection_type    = "INCLUDE"
-    non_key_attributes = ["state"]
+    projection_type    = "ALL"
     read_capacity      = 3
     write_capacity     = 3
   }
@@ -79,6 +83,15 @@ resource "aws_dynamodb_table" "geopoiesis-runs" {
     hash_key        = "scope_with_type"
     range_key       = "id"
     name            = "bytype"
+    projection_type = "ALL"
+    read_capacity   = 3
+    write_capacity  = 3
+  }
+
+  global_secondary_index {
+    hash_key        = "scope_with_visibility"
+    range_key       = "id"
+    name            = "byvisibility"
     projection_type = "ALL"
     read_capacity   = 3
     write_capacity  = 3
