@@ -60,6 +60,11 @@ resource "aws_dynamodb_table" "geopoiesis-runs" {
     type = "S"
   }
 
+  attribute {
+    name = "scope_with_worker_assigned"
+    type = "S"
+  }
+
   global_secondary_index {
     hash_key        = "scope_with_state"
     range_key       = "id"
@@ -92,6 +97,15 @@ resource "aws_dynamodb_table" "geopoiesis-runs" {
     hash_key        = "scope_with_visibility"
     range_key       = "id"
     name            = "byvisibility"
+    projection_type = "ALL"
+    read_capacity   = 3
+    write_capacity  = 3
+  }
+
+  global_secondary_index {
+    hash_key        = "scope_with_worker_assigned"
+    range_key       = "id"
+    name            = "byworkerassigned"
     projection_type = "ALL"
     read_capacity   = 3
     write_capacity  = 3
