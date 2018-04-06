@@ -4,8 +4,8 @@
 
 resource "aws_dynamodb_table" "geopoiesis-lock" {
   name           = "${var.lock_table_name}"
-  read_capacity  = 2
-  write_capacity = 2
+  read_capacity  = 1
+  write_capacity = 1
   hash_key       = "scope"
 
   attribute {
@@ -23,10 +23,16 @@ resource "aws_dynamodb_table" "geopoiesis-lock" {
   }
 }
 
+module "geopoiesis-lock-autoscaling" {
+  source = "./autoscaling"
+
+  entity = "${aws_dynamodb_table.geopoiesis-lock.name}"
+}
+
 resource "aws_dynamodb_table" "geopoiesis-runs" {
   name           = "${var.runs_table_name}"
-  read_capacity  = 5
-  write_capacity = 5
+  read_capacity  = 1
+  write_capacity = 1
   hash_key       = "scope"
   range_key      = "id"
 
@@ -70,8 +76,8 @@ resource "aws_dynamodb_table" "geopoiesis-runs" {
     range_key       = "id"
     name            = "bystate"
     projection_type = "ALL"
-    read_capacity   = 3
-    write_capacity  = 3
+    read_capacity   = 1
+    write_capacity  = 1
   }
 
   global_secondary_index {
@@ -80,8 +86,8 @@ resource "aws_dynamodb_table" "geopoiesis-runs" {
     name               = "byblocking"
     projection_type    = "INCLUDE"
     non_key_attributes = ["state", "worker_id"]
-    read_capacity      = 3
-    write_capacity     = 3
+    read_capacity      = 1
+    write_capacity     = 1
   }
 
   global_secondary_index {
@@ -89,8 +95,8 @@ resource "aws_dynamodb_table" "geopoiesis-runs" {
     range_key       = "id"
     name            = "bytype"
     projection_type = "ALL"
-    read_capacity   = 3
-    write_capacity  = 3
+    read_capacity   = 1
+    write_capacity  = 1
   }
 
   global_secondary_index {
@@ -98,8 +104,8 @@ resource "aws_dynamodb_table" "geopoiesis-runs" {
     range_key       = "id"
     name            = "byvisibility"
     projection_type = "ALL"
-    read_capacity   = 3
-    write_capacity  = 3
+    read_capacity   = 1
+    write_capacity  = 1
   }
 
   global_secondary_index {
@@ -107,8 +113,8 @@ resource "aws_dynamodb_table" "geopoiesis-runs" {
     range_key       = "id"
     name            = "byworkerassigned"
     projection_type = "ALL"
-    read_capacity   = 3
-    write_capacity  = 3
+    read_capacity   = 1
+    write_capacity  = 1
   }
 
   lifecycle {
@@ -121,10 +127,51 @@ resource "aws_dynamodb_table" "geopoiesis-runs" {
   }
 }
 
+module "geopoiesis-runs-autoscaling" {
+  source = "./autoscaling"
+
+  entity = "${aws_dynamodb_table.geopoiesis-runs.name}"
+}
+
+module "geopoiesis-runs-autoscaling-byblocking" {
+  source = "./autoscaling"
+
+  entity = "${aws_dynamodb_table.geopoiesis-runs.name}/index/byblocking"
+  type   = "index"
+}
+
+module "geopoiesis-runs-autoscaling-byvisibility" {
+  source = "./autoscaling"
+
+  entity = "${aws_dynamodb_table.geopoiesis-runs.name}/index/byvisibility"
+  type   = "index"
+}
+
+module "geopoiesis-runs-autoscaling-bytype" {
+  source = "./autoscaling"
+
+  entity = "${aws_dynamodb_table.geopoiesis-runs.name}/index/bytype"
+  type   = "index"
+}
+
+module "geopoiesis-runs-autoscaling-bystate" {
+  source = "./autoscaling"
+
+  entity = "${aws_dynamodb_table.geopoiesis-runs.name}/index/bystate"
+  type   = "index"
+}
+
+module "geopoiesis-runs-autoscaling-byworkerassigned" {
+  source = "./autoscaling"
+
+  entity = "${aws_dynamodb_table.geopoiesis-runs.name}/index/byworkerassigned"
+  type   = "index"
+}
+
 resource "aws_dynamodb_table" "geopoiesis-workers" {
   name           = "${var.workers_table_name}"
-  read_capacity  = 3
-  write_capacity = 2
+  read_capacity  = 1
+  write_capacity = 1
   hash_key       = "worker_id"
 
   attribute {
@@ -140,4 +187,10 @@ resource "aws_dynamodb_table" "geopoiesis-workers" {
     Name        = "Owner"
     Description = "Geopoiesis"
   }
+}
+
+module "geopoiesis-workers-autoscaling" {
+  source = "./autoscaling"
+
+  entity = "${aws_dynamodb_table.geopoiesis-workers.name}"
 }
