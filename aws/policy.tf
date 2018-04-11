@@ -5,6 +5,7 @@ data "aws_iam_policy_document" "geopoiesis" {
     // https://docs.aws.amazon.com/IAM/latest/UserGuide/list_logs.html
     actions = [
       "logs:CreateLogStream",
+      "logs:DescribeLogStreams",
       "logs:GetLogEvents",
       "logs:PutLogEvents",
     ]
