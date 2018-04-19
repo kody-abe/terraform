@@ -118,7 +118,11 @@ resource "aws_dynamodb_table" "geopoiesis-runs" {
   }
 
   lifecycle {
-    ignore_changes = ["read_capacity", "write_capacity"]
+    ignore_changes = [
+      "global_secondary_index",
+      "read_capacity",
+      "write_capacity",
+    ]
   }
 
   tags {
