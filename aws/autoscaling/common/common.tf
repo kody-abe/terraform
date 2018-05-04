@@ -1,5 +1,5 @@
 resource "aws_appautoscaling_target" "target" {
-  min_capacity       = 1
+  min_capacity       = "${var.min_capacity}"
   max_capacity       = 100
   resource_id        = "table/${var.entity}"
   scalable_dimension = "dynamodb:${var.type}:${var.optype}CapacityUnits"

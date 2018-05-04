@@ -8,6 +8,10 @@ variable "log_group_name" {
   default = "/geopoiesis"
 }
 
+variable "min_capacity" {
+  default = 1
+}
+
 variable "region" {
   default = "us-east-1"
 }
