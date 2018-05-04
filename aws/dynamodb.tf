@@ -26,7 +26,8 @@ resource "aws_dynamodb_table" "geopoiesis-lock" {
 module "geopoiesis-lock-autoscaling" {
   source = "./autoscaling"
 
-  entity = "${aws_dynamodb_table.geopoiesis-lock.name}"
+  entity       = "${aws_dynamodb_table.geopoiesis-lock.name}"
+  min_capacity = "${var.min_capacity}"
 }
 
 resource "aws_dynamodb_table" "geopoiesis-runs" {
@@ -202,5 +203,6 @@ resource "aws_dynamodb_table" "geopoiesis-workers" {
 module "geopoiesis-workers-autoscaling" {
   source = "./autoscaling"
 
-  entity = "${aws_dynamodb_table.geopoiesis-workers.name}"
+  entity       = "${aws_dynamodb_table.geopoiesis-workers.name}"
+  min_capacity = "${var.min_capacity}"
 }
