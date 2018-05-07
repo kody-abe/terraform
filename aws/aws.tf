@@ -16,10 +16,6 @@ variable "region" {
   default = "us-east-1"
 }
 
-variable "run_on_ecs" {
-  default = true
-}
-
 variable "runs_table_name" {
   default = "geopoiesis-runs"
 }
@@ -40,11 +36,6 @@ locals {
   account_id = "${data.aws_caller_identity.geopoiesis.account_id}"
 }
 
-// Static access key ID, generated when running Geopoiesis outside ECS.
-output "access_key_id" {
-  value = "${join("", aws_iam_access_key.geopoiesis.*.id)}"
-}
-
 // KMS key ID for the backend to use.
 output "kms_key_id" {
   value = "${aws_kms_key.geopoiesis.key_id}"
@@ -58,14 +49,4 @@ output "policy_arn" {
 // S3 bucket name for the backend to use.
 output "s3_bucket_name" {
   value = "${aws_s3_bucket.geopoiesis.id}"
-}
-
-// Static access key secret, generated when running Geopoiesis outside ECS.
-output "secret_access_key" {
-  value = "${join("", aws_iam_access_key.geopoiesis.*.secret)}"
-}
-
-// Role ARN, used to run Geopoiesis on ECS.
-output "task_role_arn" {
-  value = "${join("", aws_iam_role.geopoiesis.*.arn)}"
 }

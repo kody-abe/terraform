@@ -1,18 +1,12 @@
 data "aws_iam_policy_document" "geopoiesis" {
+  # http://docs.aws.amazon.com/IAM/latest/UserGuide/list_cloudwatch.html
   statement {
-    effect = "Allow"
-
-    // https://docs.aws.amazon.com/IAM/latest/UserGuide/list_logs.html
     actions = [
-      "logs:CreateLogStream",
-      "logs:DescribeLogStreams",
-      "logs:GetLogEvents",
-      "logs:PutLogEvents",
+      "cloudwatch:PutMetricData",
     ]
 
     resources = [
-      "${aws_cloudwatch_log_group.geopoiesis.arn}",
-      "${aws_cloudwatch_log_group.geopoiesis.arn}/*",
+      "*",
     ]
   }
 
@@ -80,6 +74,23 @@ data "aws_iam_policy_document" "geopoiesis" {
   statement {
     effect = "Allow"
 
+    // https://docs.aws.amazon.com/IAM/latest/UserGuide/list_logs.html
+    actions = [
+      "logs:CreateLogStream",
+      "logs:DescribeLogStreams",
+      "logs:GetLogEvents",
+      "logs:PutLogEvents",
+    ]
+
+    resources = [
+      "${aws_cloudwatch_log_group.geopoiesis.arn}",
+      "${aws_cloudwatch_log_group.geopoiesis.arn}/*",
+    ]
+  }
+
+  statement {
+    effect = "Allow"
+
     // https://docs.aws.amazon.com/IAM/latest/UserGuide/list_s3.html
     actions = [
       "s3:DeleteObject",
@@ -107,6 +118,18 @@ data "aws_iam_policy_document" "geopoiesis" {
     resources = [
       "arn:aws:ssm:${var.region}:${local.account_id}:parameter/${var.ssm_prefix}/*",
       "arn:aws:ssm:${var.region}:${local.account_id}:parameter/${var.ssm_prefix}/*/*",
+    ]
+  }
+
+  # https://docs.aws.amazon.com/IAM/latest/UserGuide/list_xray.html
+  statement {
+    actions = [
+      "xray:PutTelemetryRecords",
+      "xray:PutTraceSegments",
+    ]
+
+    resources = [
+      "*",
     ]
   }
 }
