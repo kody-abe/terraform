@@ -46,8 +46,11 @@ data "aws_iam_policy_document" "geopoiesis" {
 
     // https://docs.aws.amazon.com/IAM/latest/UserGuide/list_dynamodb.html
     actions = [
+      "dynamodb:DeleteItem",
       "dynamodb:GetItem",
       "dynamodb:PutItem",
+      "dynamodb:Scan",
+      "dynamodb:UpdateItem",
     ]
 
     resources = [
