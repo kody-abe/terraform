@@ -30,6 +30,7 @@ data "aws_iam_policy_document" "geopoiesis" {
 
     // https://docs.aws.amazon.com/IAM/latest/UserGuide/list_dynamodb.html
     actions = [
+      "dynamodb:BatchGetItem",
       "dynamodb:GetItem",
       "dynamodb:PutItem",
       "dynamodb:Query",
