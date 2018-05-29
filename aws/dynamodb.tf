@@ -30,6 +30,34 @@ module "geopoiesis-lock-autoscaling" {
   min_capacity = "${var.min_capacity}"
 }
 
+resource "aws_dynamodb_table" "geopoiesis-scopes" {
+  name           = "${var.scopes_table_name}"
+  read_capacity  = "${var.min_capacity}"
+  write_capacity = "${var.min_capacity}"
+  hash_key       = "scope"
+
+  attribute {
+    name = "scope"
+    type = "S"
+  }
+
+  lifecycle {
+    ignore_changes = ["read_capacity", "write_capacity"]
+  }
+
+  tags {
+    Name        = "Owner"
+    Description = "Geopoiesis"
+  }
+}
+
+module "geopoiesis-scopes-autoscaling" {
+  source = "./autoscaling"
+
+  entity       = "${aws_dynamodb_table.geopoiesis-scopes.name}"
+  min_capacity = "${var.min_capacity}"
+}
+
 resource "aws_dynamodb_table" "geopoiesis-runs" {
   name           = "${var.runs_table_name}"
   read_capacity  = "${var.min_capacity}"
@@ -48,12 +76,7 @@ resource "aws_dynamodb_table" "geopoiesis-runs" {
   }
 
   attribute {
-    name = "scope_with_state"
-    type = "S"
-  }
-
-  attribute {
-    name = "scope_with_blocking"
+    name = "queued"
     type = "S"
   }
 
@@ -73,20 +96,10 @@ resource "aws_dynamodb_table" "geopoiesis-runs" {
   }
 
   global_secondary_index {
-    hash_key        = "scope_with_state"
-    range_key       = "id"
-    name            = "bystate"
-    projection_type = "ALL"
-    read_capacity   = "${var.min_capacity}"
-    write_capacity  = "${var.min_capacity}"
-  }
-
-  global_secondary_index {
-    hash_key           = "scope_with_blocking"
+    hash_key           = "queued"
     range_key          = "id"
-    name               = "byblocking"
-    projection_type    = "INCLUDE"
-    non_key_attributes = ["state", "worker_id"]
+    name               = "byqueued"
+    projection_type    = "ALL"
     read_capacity      = "${var.min_capacity}"
     write_capacity     = "${var.min_capacity}"
   }

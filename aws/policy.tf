@@ -30,6 +30,22 @@ data "aws_iam_policy_document" "geopoiesis" {
 
     // https://docs.aws.amazon.com/IAM/latest/UserGuide/list_dynamodb.html
     actions = [
+      "dynamodb:UpdateItem",
+      "dynamodb:GetItem",
+      "dynamodb:Scan",
+    ]
+
+    resources = [
+      "${aws_dynamodb_table.geopoiesis-scopes.arn}",
+      "${aws_dynamodb_table.geopoiesis-scopes.arn}/*",
+    ]
+  }
+
+  statement {
+    effect = "Allow"
+
+    // https://docs.aws.amazon.com/IAM/latest/UserGuide/list_dynamodb.html
+    actions = [
       "dynamodb:BatchGetItem",
       "dynamodb:GetItem",
       "dynamodb:PutItem",

@@ -24,6 +24,10 @@ variable "s3_bucket" {
   default = "geopoiesis"
 }
 
+variable "scopes_table_name" {
+  default = "geopoiesis-scopes"
+}
+
 variable "ssm_prefix" {
   default = "geopoiesis"
 }
