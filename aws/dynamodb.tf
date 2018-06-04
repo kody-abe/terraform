@@ -96,12 +96,12 @@ resource "aws_dynamodb_table" "geopoiesis-runs" {
   }
 
   global_secondary_index {
-    hash_key           = "queued"
-    range_key          = "id"
-    name               = "byqueued"
-    projection_type    = "ALL"
-    read_capacity      = "${var.min_capacity}"
-    write_capacity     = "${var.min_capacity}"
+    hash_key        = "queued"
+    range_key       = "id"
+    name            = "byqueued"
+    projection_type = "ALL"
+    read_capacity   = "${var.min_capacity}"
+    write_capacity  = "${var.min_capacity}"
   }
 
   global_secondary_index {
