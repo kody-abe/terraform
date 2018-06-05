@@ -152,18 +152,10 @@ module "geopoiesis-runs-autoscaling" {
   min_capacity = "${var.min_capacity}"
 }
 
-module "geopoiesis-runs-autoscaling-byblocking" {
+module "geopoiesis-runs-autoscaling-byqueued" {
   source = "./autoscaling"
 
-  entity       = "${aws_dynamodb_table.geopoiesis-runs.name}/index/byblocking"
-  min_capacity = "${var.min_capacity}"
-  type         = "index"
-}
-
-module "geopoiesis-runs-autoscaling-byvisibility" {
-  source = "./autoscaling"
-
-  entity       = "${aws_dynamodb_table.geopoiesis-runs.name}/index/byvisibility"
+  entity       = "${aws_dynamodb_table.geopoiesis-runs.name}/index/byqueued"
   min_capacity = "${var.min_capacity}"
   type         = "index"
 }
@@ -176,10 +168,10 @@ module "geopoiesis-runs-autoscaling-bytype" {
   type         = "index"
 }
 
-module "geopoiesis-runs-autoscaling-bystate" {
+module "geopoiesis-runs-autoscaling-byvisibility" {
   source = "./autoscaling"
 
-  entity       = "${aws_dynamodb_table.geopoiesis-runs.name}/index/bystate"
+  entity       = "${aws_dynamodb_table.geopoiesis-runs.name}/index/byvisibility"
   min_capacity = "${var.min_capacity}"
   type         = "index"
 }
