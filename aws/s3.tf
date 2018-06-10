@@ -7,7 +7,7 @@ resource "random_string" "geopoiesis" {
 
 resource "aws_s3_bucket" "geopoiesis" {
   acl           = "private"
-  bucket        = "${var.s3_bucket}-${random_string.geopoiesis.result}"
+  bucket        = "${var.s3_bucket_prefix}-${random_string.geopoiesis.result}"
   force_destroy = true
   region        = "${var.region}"
 

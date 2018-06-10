@@ -1,9 +1,5 @@
 data "aws_caller_identity" "geopoiesis" {}
 
-variable "lock_table_name" {
-  default = "geopoiesis-lock"
-}
-
 variable "log_group_name" {
   default = "/geopoiesis"
 }
@@ -20,7 +16,7 @@ variable "runs_table_name" {
   default = "geopoiesis-runs"
 }
 
-variable "s3_bucket" {
+variable "s3_bucket_prefix" {
   default = "geopoiesis"
 }
 
@@ -29,7 +25,7 @@ variable "scopes_table_name" {
 }
 
 variable "ssm_prefix" {
-  default = "geopoiesis"
+  default = "/geopoiesis"
 }
 
 variable "workers_table_name" {

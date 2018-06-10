@@ -1,35 +1,3 @@
-// TODO: add autoscaling to read and write capacity.
-// Use target tracking with DynamoDBReadCapacityUtilization and
-// DynamoDBWriteCapacityUtilization set to something like 70%.
-
-resource "aws_dynamodb_table" "geopoiesis-lock" {
-  name           = "${var.lock_table_name}"
-  read_capacity  = "${var.min_capacity}"
-  write_capacity = "${var.min_capacity}"
-  hash_key       = "scope"
-
-  attribute {
-    name = "scope"
-    type = "S"
-  }
-
-  lifecycle {
-    ignore_changes = ["read_capacity", "write_capacity"]
-  }
-
-  tags {
-    Name        = "Owner"
-    Description = "Geopoiesis"
-  }
-}
-
-module "geopoiesis-lock-autoscaling" {
-  source = "./autoscaling"
-
-  entity       = "${aws_dynamodb_table.geopoiesis-lock.name}"
-  min_capacity = "${var.min_capacity}"
-}
-
 resource "aws_dynamodb_table" "geopoiesis-scopes" {
   name           = "${var.scopes_table_name}"
   read_capacity  = "${var.min_capacity}"
