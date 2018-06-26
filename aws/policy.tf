@@ -79,6 +79,19 @@ data "aws_iam_policy_document" "geopoiesis" {
   statement {
     effect = "Allow"
 
+    // https://docs.aws.amazon.com/IAM/latest/UserGuide/list_amazoncloudwatchevents.html
+    actions = [
+      "events:PutEvents",
+    ]
+
+    resources = [
+      "*",
+    ]
+  }
+
+  statement {
+    effect = "Allow"
+
     // https://docs.aws.amazon.com/IAM/latest/UserGuide/list_kms.html
     actions = [
       "kms:Decrypt",
