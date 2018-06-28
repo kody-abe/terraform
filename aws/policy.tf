@@ -15,21 +15,6 @@ data "aws_iam_policy_document" "geopoiesis" {
 
     // https://docs.aws.amazon.com/IAM/latest/UserGuide/list_dynamodb.html
     actions = [
-      "dynamodb:DeleteItem",
-      "dynamodb:PutItem",
-    ]
-
-    resources = [
-      "${aws_dynamodb_table.geopoiesis-lock.arn}",
-      "${aws_dynamodb_table.geopoiesis-lock.arn}/*",
-    ]
-  }
-
-  statement {
-    effect = "Allow"
-
-    // https://docs.aws.amazon.com/IAM/latest/UserGuide/list_dynamodb.html
-    actions = [
       "dynamodb:UpdateItem",
       "dynamodb:GetItem",
       "dynamodb:Scan",
