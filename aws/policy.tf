@@ -135,8 +135,8 @@ data "aws_iam_policy_document" "geopoiesis" {
     ]
 
     resources = [
-      "arn:aws:ssm:${var.region}:${local.account_id}:parameter/${var.ssm_prefix}/*",
-      "arn:aws:ssm:${var.region}:${local.account_id}:parameter/${var.ssm_prefix}/*/*",
+      "arn:aws:ssm:${var.region}:${local.account_id}:parameter${var.ssm_prefix}/*",
+      "arn:aws:ssm:${var.region}:${local.account_id}:parameter${var.ssm_prefix}/*/*",
     ]
   }
 
