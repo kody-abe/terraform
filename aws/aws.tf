@@ -8,6 +8,10 @@ variable "min_capacity" {
   default = 1
 }
 
+variable "policy_name" {
+  default = "geopoiesis"
+}
+
 variable "region" {
   default = "us-east-1"
 }

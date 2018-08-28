@@ -154,7 +154,7 @@ data "aws_iam_policy_document" "geopoiesis" {
 }
 
 resource "aws_iam_policy" "geopoiesis" {
-  name        = "geopoiesis"
+  name        = "${var.policy_name}"
   description = "Minimal access permissions for the Geopoiesis AWS backend"
   policy      = "${data.aws_iam_policy_document.geopoiesis.json}"
 }
