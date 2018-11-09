@@ -21,6 +21,8 @@ The minimal, default AWS backend setup looks very simple:
 ```hcl
 module "geopoiesis-backend" {
   source = "github.com/geopoiesis/terraform//aws?ref=0.6.0"
+
+  region = "us-east-1"
 }
 ```
 
@@ -40,9 +42,8 @@ The full API is a bit more complex - see below.
   kick in, so if you are expecting heavier load, it's better to specify a lower
   bound that is larger than 1;
 
-- `region` (optional, default = `"us-east-1"`) - AWS region where resources are
-  to be created. Remember it's a good practice to keep your storage and compute
-  as close as possible;
+- `region` (required) - AWS region where resources are to be created. Remember
+  it's a good practice to keep your storage and compute as close as possible;
 
 - `runs_table_name` (optional, `default = "geopoiesis-runs"`) - name of the
   DynamoDB table used to store Runs history. The only reason why you may want to
@@ -99,6 +100,8 @@ Usage example:
 ```hcl
 module "geopoiesis-backend" {
   source = "github.com/geopoiesis/terraform//aws?ref=0.6.0"
+
+  region = "us-east-1"
 }
 
 module "geopoiesis-role" {
@@ -139,6 +142,8 @@ The usage is quite simple:
 ```hcl
 module "geopoiesis-backend" {
   source = "github.com/geopoiesis/terraform//aws?ref=0.6.0"
+
+  region = "us-east-1"
 }
 
 module "geopoiesis-user" {
@@ -206,6 +211,8 @@ safer. Here is how to set one up using Terraform:
 ```hcl
 module "geopoiesis-backend" {
   source = "github.com/geopoiesis/terraform//aws?ref=0.6.0"
+
+  region = "us-east-1"
 }
 
 module "production-aws-secret-key" {

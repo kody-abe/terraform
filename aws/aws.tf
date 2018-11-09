@@ -12,9 +12,7 @@ variable "policy_name" {
   default = "geopoiesis"
 }
 
-variable "region" {
-  default = "us-east-1"
-}
+variable "region" {}
 
 variable "runs_table_name" {
   default = "geopoiesis-runs"
