@@ -11,8 +11,6 @@ The main module is located under `/aws` and it creates the following resources:
   user review;
 - a CloudWatch Logs log group to persist logs from individual runs;
 - three DynamoDB tables with associated secondary indexes;
-- DynamoDB autoscaling rules, targeting 70% utilization of
-  reads and writes;
 - a KMS key used to secure application secrets and S3 objectss;
 - an IAM policy giving the minimum necessary access to the above resources;
 
@@ -35,12 +33,6 @@ The full API is a bit more complex - see below.
   _not_ a destination for application logs. The only reason why you may want to
   use a non-standard name is running multiple installations of Geopoiesis in one
   AWS account;
-
-- `min_capacity` (optional, default = `1`) - minimum provisioned read and write
-  throughput for application DynamoDB tables. All Geopoiesis tables and indexes
-  are autoscaled with 70% target utilization, but autoscaling takes a while to
-  kick in, so if you are expecting heavier load, it's better to specify a lower
-  bound that is larger than 1;
 
 - `region` (required) - AWS region where resources are to be created. Remember
   it's a good practice to keep your storage and compute as close as possible;

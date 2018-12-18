@@ -4,10 +4,6 @@ variable "log_group_name" {
   default = "/geopoiesis"
 }
 
-variable "min_capacity" {
-  default = 1
-}
-
 variable "policy_name" {
   default = "geopoiesis"
 }
