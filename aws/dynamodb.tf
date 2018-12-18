@@ -1,6 +1,7 @@
 resource "aws_dynamodb_table" "geopoiesis-scopes" {
-  name     = "${var.scopes_table_name}"
-  hash_key = "scope"
+  name         = "${var.scopes_table_name}"
+  billing_mode = "PAY_PER_REQUEST"
+  hash_key     = "scope"
 
   attribute {
     name = "scope"
