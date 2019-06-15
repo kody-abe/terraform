@@ -140,6 +140,12 @@ data "aws_iam_policy_document" "geopoiesis" {
     ]
   }
 
+  statement {
+    effect   = "Allow"
+    actions  = ["sts:AssumeRole"]
+    resource = ["*"]
+  }
+
   # https://docs.aws.amazon.com/IAM/latest/UserGuide/list_xray.html
   statement {
     actions = [
